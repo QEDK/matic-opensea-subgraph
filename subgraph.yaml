@@ -1,0 +1,35 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: matic
+    source:
+      address: "0xfede379e48C873C75F3cc0C81F7C784aD730a8F7"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - SignatureValidatorApproval
+        - Fill
+        - Cancel
+        - CancelUpTo
+        - AssetProxyRegistered
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: SignatureValidatorApproval(indexed address,indexed address,bool)
+          handler: handleSignatureValidatorApproval
+        - event: Fill(indexed address,indexed address,address,address,uint256,uint256,uint256,uint256,indexed bytes32,bytes,bytes)
+          handler: handleFill
+        - event: Cancel(indexed address,indexed address,address,indexed bytes32,bytes,bytes)
+          handler: handleCancel
+        - event: CancelUpTo(indexed address,indexed address,uint256)
+          handler: handleCancelUpTo
+        - event: AssetProxyRegistered(bytes4,address)
+          handler: handleAssetProxyRegistered
+      file: ./src/mapping.ts
