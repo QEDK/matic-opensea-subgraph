@@ -123,21 +123,21 @@ export class fills extends Entity {
     this.set("orderHash", Value.fromString(value));
   }
 
-  get makerAssetData(): string {
+  get makerAssetData(): Bytes {
     let value = this.get("makerAssetData");
-    return value.toString();
+    return value.toBytes();
   }
 
-  set makerAssetData(value: string) {
-    this.set("makerAssetData", Value.fromString(value));
+  set makerAssetData(value: Bytes) {
+    this.set("makerAssetData", Value.fromBytes(value));
   }
 
-  get takerAssetData(): string {
+  get takerAssetData(): Bytes {
     let value = this.get("takerAssetData");
-    return value.toString();
+    return value.toBytes();
   }
 
-  set takerAssetData(value: string) {
-    this.set("takerAssetData", Value.fromString(value));
+  set takerAssetData(value: Bytes) {
+    this.set("takerAssetData", Value.fromBytes(value));
   }
 }

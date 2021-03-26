@@ -9,6 +9,6 @@ type fills @entity {
   makerFee: BigInt!,
   takerFee: BigInt!,
   orderHash: String!,
-  makerAssetData: String!,
-  takerAssetData: String!
+  makerAssetData: Bytes!,
+  takerAssetData: Bytes!
 }

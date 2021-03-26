@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, Bytes } from "@graphprotocol/graph-ts"
 import {
   Contract,
   SignatureValidatorApproval,
@@ -82,25 +82,18 @@ export function handleSignatureValidatorApproval(
 export function handleFill(event: Fill): void {
   let entity = fills.load(event.transaction.from.toHex())
 
-  if (entity == null) {
-    entity = new fills(event.transaction.from.toHex())
-
-    entity.count = BigInt.fromI32(0)
-  }
-
-  entity.count = entity.count + BigInt.fromI32(1)
-
-  entity.makerAddress = event.params.makerAddress
-  entity.feeRecipientAddress = event.params.feeRecipientAddress
-  entity.takerAddress = event.params.takerAddress
-  entity.senderAddress = event.params.senderAddress
-  entity.makerAssetFilledAmount = event.params.makerAssetFilledAmount
-  entity.takerAssetFilledAmount = event.params.takerAssetFilledAmount
-  entity.makerFeePaid = event.params.makerFeePaid
-  entity.takerFeePaid = event.params.takerFeePaid
-  entity.orderHash = event.params.orderHash
-  entity.makerAssetData = event.params.makerAssetData
-  entity.takerAssetData = event.params.takerAssetData
+  entity.id = <String>event.transaction.from.toHex()
+  entity.makerAddress = <String>event.params.makerAddress
+  entity.feeRecipientAddress = <String>event.params.feeRecipientAddress
+  entity.takerAddress = <String>event.params.takerAddress
+  entity.senderAddress = <String>event.params.senderAddress
+  entity.makerFilledAmount = event.params.makerAssetFilledAmount
+  entity.takerFilledAmount = event.params.takerAssetFilledAmount
+  entity.makerFee = event.params.makerFeePaid
+  entity.takerFee = event.params.takerFeePaid
+  entity.orderHash = <String>event.params.orderHash
+  entity.makerAssetData = <Bytes>event.params.makerAssetData
+  entity.takerAssetData = <Bytes>event.params.takerAssetData
 
   entity.save()
 }
