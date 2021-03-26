@@ -1,13 +1,14 @@
-type Fill @entity {
+type fills @entity {
   id: ID!
-  makerAddress: ID!,
-  feeRecipientAddress: ID!,
-  takerAddress: ID!,
-  senderAddress: ID!,
-  makerFilledAmount: BigInt,
-  takerFilledAmount: BigInt,
-  makerFee: BigInt,
-  takerFee: BigInt,
-  makerAssetData: String,
-  takerAssetData: String
+  makerAddress: String!,
+  feeRecipientAddress: String!,
+  takerAddress: String!,
+  senderAddress: String!,
+  makerFilledAmount: BigInt!,
+  takerFilledAmount: BigInt!,
+  makerFee: BigInt!,
+  takerFee: BigInt!,
+  orderHash: String!,
+  makerAssetData: String!,
+  takerAssetData: String!
 }
