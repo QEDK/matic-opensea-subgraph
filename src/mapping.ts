@@ -7,33 +7,33 @@ import {
   CancelUpTo,
   AssetProxyRegistered
 } from "../generated/Contract/Contract"
-import { ExampleEntity } from "../generated/schema"
+import { fills } from "../generated/schema"
 
 export function handleSignatureValidatorApproval(
   event: SignatureValidatorApproval
 ): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
+  //let entity = ExampleEntity.load(event.transaction.from.toHex())
 
   // Entities only exist after they have been saved to the store;
   // `null` checks allow to create entities on demand
-  if (entity == null) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
+  //if (entity == null) {
+  //  entity = new ExampleEntity(event.transaction.from.toHex())
 
     // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
+  //  entity.count = BigInt.fromI32(0)
+  //}
 
   // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
+  //entity.count = entity.count + BigInt.fromI32(1)
 
   // Entity fields can be set based on event parameters
-  entity.signerAddress = event.params.signerAddress
-  entity.validatorAddress = event.params.validatorAddress
+  //entity.signerAddress = event.params.signerAddress
+  //entity.validatorAddress = event.params.validatorAddress
 
   // Entities can be written to the store with `.save()`
-  entity.save()
+  //entity.save()
 
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with
@@ -79,7 +79,31 @@ export function handleSignatureValidatorApproval(
   // - contract.VERSION(...)
 }
 
-export function handleFill(event: Fill): void {}
+export function handleFill(event: Fill): void {
+  let entity = fills.load(event.transaction.from.toHex())
+
+  if (entity == null) {
+    entity = new fills(event.transaction.from.toHex())
+
+    entity.count = BigInt.fromI32(0)
+  }
+
+  entity.count = entity.count + BigInt.fromI32(1)
+
+  entity.makerAddress = event.params.makerAddress
+  entity.feeRecipientAddress = event.params.feeRecipientAddress
+  entity.takerAddress = event.params.takerAddress
+  entity.senderAddress = event.params.senderAddress
+  entity.makerAssetFilledAmount = event.params.makerAssetFilledAmount
+  entity.takerAssetFilledAmount = event.params.takerAssetFilledAmount
+  entity.makerFeePaid = event.params.makerFeePaid
+  entity.takerFeePaid = event.params.takerFeePaid
+  entity.orderHash = event.params.orderHash
+  entity.makerAssetData = event.params.makerAssetData
+  entity.takerAssetData = event.params.takerAssetData
+
+  entity.save()
+}
 
 export function handleCancel(event: Cancel): void {}
 
