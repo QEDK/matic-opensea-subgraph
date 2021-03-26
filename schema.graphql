@@ -1,6 +1,13 @@
-type ExampleEntity @entity {
+type Fill @entity {
   id: ID!
-  count: BigInt!
-  signerAddress: Bytes! # address
-  validatorAddress: Bytes! # address
+  makerAddress: ID!,
+  feeRecipientAddress: ID!,
+  takerAddress: ID!,
+  senderAddress: ID!,
+  makerFilledAmount: BigInt,
+  takerFilledAmount: BigInt,
+  makerFee: BigInt,
+  takerFee: BigInt,
+  makerAssetData: String,
+  takerAssetData: String
 }
