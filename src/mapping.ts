@@ -82,7 +82,10 @@ export function handleSignatureValidatorApproval(
 export function handleFill(event: Fill): void {
   let entity = fills.load(event.transaction.from.toHex())
 
-  entity.id = <String>event.transaction.from.toHex()
+  if (entity == null) {
+    entity = new fills(event.transaction.from.toHex())
+  }
+
   entity.makerAddress = <String>event.params.makerAddress
   entity.feeRecipientAddress = <String>event.params.feeRecipientAddress
   entity.takerAddress = <String>event.params.takerAddress

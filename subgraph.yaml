@@ -14,11 +14,7 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - SignatureValidatorApproval
-        - Fill
-        - Cancel
-        - CancelUpTo
-        - AssetProxyRegistered
+        - fills
       abis:
         - name: Contract
           file: ./abis/Contract.json
